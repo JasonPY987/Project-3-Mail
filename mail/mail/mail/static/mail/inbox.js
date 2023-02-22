@@ -26,7 +26,6 @@ function compose_email() {
 }
 
 function load_mailbox(mailbox) {
-  
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
@@ -42,9 +41,18 @@ function load_mailbox(mailbox) {
       // loop through each email to make a new div
       emails.forEach(singleEmail => {
 
+        console.log(singleEmail);
+
         // creates new div for each email!
         const newEmail = document.createElement('div');
-        newEmail.innerHTML = 'This is the content of the div.';
+        newEmail.className = "list-group-item";
+        newEmail.innerHTML =`
+
+          <h3>Sender: ${singleEmail.sender} </h3>
+          <h4>Subject: ${singleEmail.subject} </h4>
+          <p> ${singleEmail.timestamp} </p>
+
+          `;
         newEmail.addEventListener('click', function() {
             console.log('This newEmail has been clicked!')
         });
