@@ -1,3 +1,16 @@
 textarea {
     min-height: 400px;
 }
+
+.read{
+    background-color: rgb(158, 157, 157);
+}
+
+.unread{
+    background-color: white;
+}
+
+.list-group-item{
+    border: 2px solid black;
+
+}
