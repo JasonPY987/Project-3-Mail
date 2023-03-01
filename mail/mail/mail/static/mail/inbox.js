@@ -83,20 +83,37 @@ function view_email(id){
     //.. do something else with email .... 
 
     document.querySelector('#email-detail-view').innerHTML = ` 
-      hello 
+    <ul class="list-group">
+      <li class="list-group-item"><strong>From:</strong> ${email.sender} </li>
+      <li class="list-group-item"><strong>To:</strong> ${email.recipients} </li>
+      <li class="list-group-item"><strong>Subject:</strong> ${email.subject} </li>
+      <li class="list-group-item"><strong>TOD:</strong> ${email.timestamp} </li>
+      <li class="list-group-item"> ${email.body} </li>
+    </ul>
     `
 
+      /// read is TRUE
+
+      if(!email.read) {
+        fetch(`/emails/${email.id}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+              read: true
+          })
+        })
+      }
   });
 }
 
 
 /* function send_email(event){
-  event.preventDefault();
+ event.preventDefault();
 
   const recipients = document.querySelector('#compose-recipients').value;
   const subject = document.querySelector('#compose-subject').value;
   const body = document.querySelector('#compose-body').value;
 
+  
   //send data 
   fetch('/emails', {
     method: 'POST',
@@ -111,5 +128,22 @@ function view_email(id){
       // Print result
       console.log(result);
       load_mailbox('sent');
-  }); 
-} */
+  });
+} */ 
+
+function send_email(event) {
+  event.preventDefault()
+
+  // Post email to API route
+  fetch('/emails' , {
+    method: 'POST',
+    body: JSON.stringify({
+      recipients: document.querySelector('#compose-recipients').value,
+      subject: document.querySelector('#compose-subject').value,
+      body: document.querySelector('#compose-body').value
+    })
+  })
+  .then(response => load_mailbox('sent'));
+}
+
+
